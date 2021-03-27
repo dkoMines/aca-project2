@@ -47,7 +47,7 @@ struct prefetcher {
     void (*cleanup)(struct prefetcher *prefetcher);
 
     // Use this pointer to store any data that the prefetcher needs.
-    uint32_t *data;
+    void *data;
 };
 
 // Constructors for each of the replacement policies.
