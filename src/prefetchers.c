@@ -34,11 +34,11 @@ uint32_t sequential_handle_mem_access(struct prefetcher *prefetcher,
     // TODO: Return the number of lines that were prefetched.
     int count = 0;
     uint32_t target = address+cache_system->line_size;
-    for (int i=0; i < *(uint32_t *)prefetcher->data; i++){
-	if (cache_system_mem_access(cache_system, target, 'R', true) == 0){
-		count ++;
-	}
-	target += cache_system->line_size;
+    for (int i=0; i < prefetcher->data; i++){
+        if (cache_system_mem_access(cache_system, target, 'R', true) == 0){
+            count ++;
+        }
+        target += cache_system->line_size;
     }
     return count;
 }
@@ -57,8 +57,7 @@ struct prefetcher *sequential_prefetcher_new(uint32_t prefetch_amount)
 
     // TODO allocate any additional memory needed to store metadata here and
     // assign to sequential_prefetcher->data.
-    sequential_prefetcher->data = malloc(sizeof(uint32_t));
-    sequential_prefetcher->data = &prefetch_amount;
+    sequential_prefetcher->data = prefetch_amount;
 
     return sequential_prefetcher;
 }
