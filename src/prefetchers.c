@@ -59,9 +59,8 @@ uint32_t adjacent_handle_mem_access(struct prefetcher *prefetcher,
                                     struct cache_system *cache_system, uint32_t address,
                                     bool is_miss)
 {
-    if (is_miss){return 0;}
     // TODO perform the necessary prefetches for the adjacent strategy.
-    if (cache_system_mem_access(cache_system, address+1, rw, true) == 0){
+    if (cache_system_mem_access(cache_system, address+cache_system->line_size, 'R', true) == 0){
         return 1;
     }
 
