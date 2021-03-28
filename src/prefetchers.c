@@ -103,48 +103,47 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
                                   uint32_t address, bool is_miss)
 {
     // TODO: Return the number of lines that were prefetched.
-    uint32_t *adapt = (uint32_t *) prefetcher->data;
-    if (adapt[0] == 0){
-//        cache_system_mem_access(cache_system, address+cache_system->line_size, 'R', true)
-        printf("adapt = 0\n");
-    } else {
-        int index = address - adapt[0];
-        if (index >= -50 && index <= 50 && index != 0) {
-            adapt[index + 51] = adapt[index + 51] + 1;
-            printf("Index is: %d\n", index);
-        } else {
-            printf("Current address: 0x%x  | Old address: 0x%x \n", address, adapt[0]);
-            printf("Index doesn't fit. it is: %d\n", index);
-        }
-    }
+//    uint32_t *adapt = (uint32_t *) prefetcher->data;
+//    if (adapt[0] == 0){
+////        cache_system_mem_access(cache_system, address+cache_system->line_size, 'R', true)
+//        printf("adapt = 0\n");
+//    } else {
+//        int index = address - adapt[0];
+//        if (index >= -50 && index <= 50 && index != 0) {
+//            adapt[index + 51] = adapt[index + 51] + 1;
+//            printf("Index is: %d\n", index);
+//        } else {
+//            printf("Current address: 0x%x  | Old address: 0x%x \n", address, adapt[0]);
+//            printf("Index doesn't fit. it is: %d\n", index);
+//        }
+//    }
     int count = 0;
-    int size = 2;
-    int highestNums[size];
-    int highestCounts[size];
+    int size = 1;
+//    int highestNums[size];
+//    int highestCounts[size];
+//    for (int i=0;i<size;i++){
+//        highestNums[i] = 0;
+//        highestCounts[i] = 0;
+//    }
+//    for (int i=1; i<102;i++){
+//        if (adapt[i] > highestCounts[size-1]){
+//            for (int j=0;j<size;j++){
+//                if (adapt[i] > highestCounts[j]){
+//                    highestCounts[j] = adapt[i];
+//                    highestNums[j] = i-51;
+//                    break;
+//                }
+//            }
+//        }
+//    }
     for (int i=0;i<size;i++){
-        highestNums[i] = 0;
-        highestCounts[i] = 0;
-    }
-    for (int i=1; i<102;i++){
-        if (adapt[i] > highestCounts[size-1]){
-            for (int j=0;j<size;j++){
-                if (adapt[i] > highestCounts[j]){
-                    highestCounts[j] = adapt[i];
-                    highestNums[j] = i-51;
-                    break;
-                }
-            }
-        }
-    }
-    for (int i=0;i<size;i++){
-        printf("Selected %d as highest num \n", highestNums[i]);
-        if (cache_system_mem_access(cache_system, address + highestNums[i], 'R', true) == 0){
+        if (cache_system_mem_access(cache_system, address + 2**16, 'R', true) == 0){
             count ++;
         }
     }
 
 
-    adapt[0] = address;
+//    adapt[0] = address;
     return count;
 }
 
