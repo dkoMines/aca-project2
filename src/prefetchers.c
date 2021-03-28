@@ -103,21 +103,21 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
                                   uint32_t address, bool is_miss)
 {
     // TODO: Return the number of lines that were prefetched.
-    uint32_t *adapt = *(uint32_t *) prefetcher->data;
-    pAmount = 2;
+    uint32_t *adapt = (uint32_t *) prefetcher->data;
+    uint32_t pAmount = 2;
     if (adapt[0] == 0){
 //        cache_system_mem_access(cache_system, address+cache_system->line_size, 'R', true)
         printf("adapt = 0\n");
     } else {
         uint32_t index = (uint32_t) ((address - adapt[0])/cache_system->line_size);
-        if (index >= 1 && index =< 7) {
+        if (index >= 1 && index <= 7) {
             adapt[index] = adapt[index] + 1;
             printf("Index is: %d\n", index);
         } else {
             printf("Index doesn't fit. it is: %d\n", index);
         }
     }
-//    int count = 0;
+    int count = 0;
 //    uint32_t target = address+cache_system->line_size;
 //    for (int i=0; i < pAmount; i++){
 //        if (cache_system_mem_access(cache_system, target, 'R', true) == 0){
@@ -144,7 +144,7 @@ struct prefetcher *custom_prefetcher_new()
     // TODO allocate any additional memory needed to store metadata here and
     // assign to custom_prefetcher->data.
     custom_prefetcher->data = calloc(7, sizeof(uint32_t));
-    custom_prefetcher->data[0] = 0;
+    *((uint32_t *) custom_prefetcher->data) = 0;
 
 
     return custom_prefetcher;
