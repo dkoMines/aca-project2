@@ -59,7 +59,7 @@ struct prefetcher *sequential_prefetcher_new(uint32_t prefetch_amount)
     // TODO allocate any additional memory needed to store metadata here and
     // assign to sequential_prefetcher->data.
     sequential_prefetcher->data = malloc(sizeof(uint32_t));
-    *((uint32_t *) sequential_prefetcher->data) = &prefetch_amount;
+    *((uint32_t *) sequential_prefetcher->data) = prefetch_amount;
 
     return sequential_prefetcher;
 }
