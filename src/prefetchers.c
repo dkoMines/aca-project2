@@ -119,19 +119,31 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
         }
     }
     int count = 0;
-    int highestNum = 0;
-    int highestCount = 0;
+    int size = 3;
+    int highestNums[size];
+    int highestCounts[size];
+    for (int i=0;i<size;i++){
+        highestNums[i] = 0;
+        highestCounts[i] = 0;
+    }
     for (int i=1; i<102;i++){
-        if (adapt[i] > highestCount){
-            highestCount = adapt[i];
-            highestNum = i-51;
+        if (adapt[i] > highestCount[size-1]){
+            for (int j=0;j<size;j++){
+                if (adapt[i] > highestCount[j]){
+                    highestCount[j] = adapt[i];
+                    highestNum[j] = i-51;
+                    break;
+                }
+            }
         }
     }
-    print("Selected %d as highest num \n", highestNum);
-
-    if (cache_system_mem_access(cache_system, address + highestNum, 'R', true) == 0){
-        count ++;
+    for (int i=0;i<size;i++){
+        print("Selected %d as highest num \n", highestNum[i]);
+        if (cache_system_mem_access(cache_system, address + highestNum, 'R', true) == 0){
+            count ++;
+        }
     }
+
 
     adapt[0] = address;
     return count;
