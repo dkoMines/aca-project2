@@ -109,24 +109,30 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
 //        cache_system_mem_access(cache_system, address+cache_system->line_size, 'R', true)
         printf("adapt = 0\n");
     } else {
-        int index = (int) ((int)( (int) address - (int) adapt[0])/cache_system->line_size);
-        if (index >= 1 && index <= 7) {
-            adapt[index] = adapt[index] + 1;
+        int index = address - adapt[0];
+        if (index >= -50 && index <= 50 && index != 0) {
+            adapt[index + 51] = adapt[index + 51] + 1;
             printf("Index is: %d\n", index);
         } else {
             printf("Current address: 0x%x  | Old address: 0x%x \n", address, adapt[0]);
-
             printf("Index doesn't fit. it is: %d\n", index);
         }
     }
     int count = 0;
-//    uint32_t target = address+cache_system->line_size;
-//    for (int i=0; i < pAmount; i++){
-//        if (cache_system_mem_access(cache_system, target, 'R', true) == 0){
-//            count ++;
-//        }
-//        target += cache_system->line_size;
-//    }
+    int highestNum = 0;
+    int highestCount = 0;
+    for (int i=1; i<102;i++){
+        if (adapt[i] > highestCount){
+            highestCount = adapt[i];
+            highestNum = i-51;
+        }
+    }
+    print("Selected %d as highest num \n", highestNum);
+
+    if (cache_system_mem_access(cache_system, address + highestNum, 'R', true) == 0){
+        count ++;
+    }
+
     adapt[0] = address;
     return count;
 }
@@ -135,6 +141,7 @@ void custom_cleanup(struct prefetcher *prefetcher)
 {
     // TODO cleanup any additional memory that you allocated in the
     // custom_prefetcher_new function.
+    free(prefetcher->data);
 }
 
 struct prefetcher *custom_prefetcher_new()
@@ -145,7 +152,7 @@ struct prefetcher *custom_prefetcher_new()
 
     // TODO allocate any additional memory needed to store metadata here and
     // assign to custom_prefetcher->data.
-    custom_prefetcher->data = calloc(7, sizeof(int));
+    custom_prefetcher->data = calloc(102, sizeof(int));
     *((int *) custom_prefetcher->data) = 0;
 
 
