@@ -114,7 +114,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
             adapt[index] = adapt[index] + 1;
             printf("Index is: %d\n", index);
         } else {
-            printf("Current address: %d  | Old address: %d \n", address, adapt[0]);
+            printf("Current address: 0x%x  | Old address: 0x%x \n", address, adapt[0]);
 
             printf("Index doesn't fit. it is: %d\n", index);
         }
