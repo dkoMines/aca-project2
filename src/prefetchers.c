@@ -109,7 +109,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
 //        cache_system_mem_access(cache_system, address+cache_system->line_size, 'R', true)
         printf("adapt = 0\n");
     } else {
-        int index = (int) ((address - adapt[0])/cache_system->line_size);
+        int index = (int) ((int)( (int) address - (int) adapt[0])/cache_system->line_size);
         if (index >= 1 && index <= 7) {
             adapt[index] = adapt[index] + 1;
             printf("Index is: %d\n", index);
