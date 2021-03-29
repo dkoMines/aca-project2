@@ -200,7 +200,9 @@ struct prefetcher *custom_prefetcher_new()
     // TODO allocate any additional memory needed to store metadata here and
     // assign to custom_prefetcher->data.
     custom_prefetcher->data = calloc(10, sizeof(int));
-    *((int *) custom_prefetcher->data) = 0;
+    for (int i=0;i<10;i++){
+        *((int *) custom_prefetcher->data[i]) = 0;
+    }
 
 
     return custom_prefetcher;
