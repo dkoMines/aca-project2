@@ -133,8 +133,6 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
         }
         else if (index >= -oneBlock*2 && index < oneBlock){
             adapt[8] = adapt[8] + 1;
-        } else {
-            printf("Not one of these: %i",index);
         }
     }
     if ((float)adapt[1]/adapt[9] > percentNeeded){
