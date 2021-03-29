@@ -105,8 +105,8 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
     uint32_t *adapt = (uint32_t *) prefetcher->data;
     adapt[9] = adapt[9]+1;
     uint32_t oneSet = pow(2,16);
-    uint32_t oneBlock = (cache_system->line_size);
-    float percentNeeded = .24;
+    uint32_t oneBlock = cache_system->line_size;
+    float percentNeeded = .10;
     int count = 0;
     if (adapt[0] != 0){
         int index = address - adapt[0];
@@ -119,7 +119,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
         else if (index <= oneBlock && index > 0){
             adapt[3] = adapt[3] + 1;
         }
-        else if (index == -(int) oneBlock){
+        else if (index >= -oneBlock && index < 0){
             adapt[4] = adapt[4] + 1;
         }
         else if (index == oneSet * 2){
@@ -131,7 +131,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
         else if (index <= oneBlock * 2 && index > oneBlock){
             adapt[7] = adapt[7] + 1;
         }
-        else if (index == -(int) oneBlock * 2){
+        else if (index >= -oneBlock*2 && index < oneBlock){
             adapt[8] = adapt[8] + 1;
         } else {
             printf("Not one of these: %i",index);
