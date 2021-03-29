@@ -106,7 +106,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
     adapt[9] = adapt[9]+1;
     uint32_t oneSet = pow(2,16);
     uint32_t oneBlock = cache_system->line_size;
-    float percentNeeded = .01;
+    float percentNeeded = (float)adapt[10]/100;
     int count = 0;
     if (adapt[0] != 0){
         int index = address - adapt[0];
@@ -191,7 +191,7 @@ void custom_cleanup(struct prefetcher *prefetcher)
     free(prefetcher->data);
 }
 
-struct prefetcher *custom_prefetcher_new()
+struct prefetcher *custom_prefetcher_new(uint32_t percent)
 {
     struct prefetcher *custom_prefetcher = calloc(1, sizeof(struct prefetcher));
     custom_prefetcher->handle_mem_access = &custom_handle_mem_access;
@@ -199,12 +199,13 @@ struct prefetcher *custom_prefetcher_new()
 
     // TODO allocate any additional memory needed to store metadata here and
     // assign to custom_prefetcher->data.
-    custom_prefetcher->data = calloc(10, sizeof(int));
+    custom_prefetcher->data = calloc(11, sizeof(int));
     uint32_t *adapt = (uint32_t *) custom_prefetcher->data;
 
     for (int i=0;i<10;i++){
         adapt[i] = 0;
     }
+    adapt[10] = percent;
 
 
     return custom_prefetcher;
