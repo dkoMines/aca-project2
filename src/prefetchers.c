@@ -141,6 +141,9 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
         if (cache_system_mem_access(cache_system, address + oneSet, 'R', true) == 0){
             count ++;
         }
+        if (cache_system_mem_access(cache_system, address + oneSet + oneBlock, 'R', true) == 0){
+            count ++;
+        }
     }
     if ((float)adapt[2]/adapt[9] > percentNeeded){
         if (cache_system_mem_access(cache_system, address - oneSet, 'R', true) == 0){
