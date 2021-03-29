@@ -107,32 +107,41 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
     uint32_t oneBlock = pow(2,(cache_system->line_size));
     int count = 0;
     if (adapt[0] != 0){
-        if (address - adapt[0] = oneSet){
-            if (cache_system_mem_access(cache_system, address + oneSet, 'R', true) == 0){
-                count ++;
-            }
+        int index = address - adapt[0];
+        if (index = oneSet){
+            adapt[1] = adapt[1] + 1;
         }
-        else if (address - adapt[0] = -(int) oneSet){
-            if ((address - oneSet) > 0 && cache_system_mem_access(cache_system, address - oneSet, 'R', true) == 0){
-                count ++;
-            }
+        else if (index = -(int) oneSet){
+            adapt[2] = adapt[2] + 1;
         }
-        else if (address - adapt[0] = oneBlock){
-            if (cache_system_mem_access(cache_system, address + oneBlock, 'R', true) == 0){
-                count ++;
-            }
+        else if (index = oneBlock){
+            adapt[3] = adapt[3] + 1;
         }
-        else if (address - adapt[0] = -(int) oneBlock){
-            if ((address - oneBlock) > 0 && cache_system_mem_access(cache_system, address - oneBlock, 'R', true) == 0){
-                count ++;
-            }
+        else if (index = -(int) oneBlock){
+            adapt[4] = adapt[4] + 1;
+        }
+        else if (index = oneSet * 2){
+            adapt[5] = adapt[5] + 1;
+        }
+        else if (index = -(int) oneSet * 2){
+            adapt[6] = adapt[6] + 1;
+        }
+        else if (index = oneBlock * 2){
+            adapt[7] = adapt[7] + 1;
+        }
+        else if (index = -(int) oneBlock * 2){
+            adapt[8] = adapt[8] + 1;
+        } else {
+            printf("Not one of these: %i",index);
         }
     }
 
+    if (cache_system_mem_access(cache_system, address + oneSet, 'R', true) == 0){
+        count ++;
+    }
 
 
-
-
+    adapt[9] = adapt[9]+1;
     adapt[0] = address;
     return count;
 }
