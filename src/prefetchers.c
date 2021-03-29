@@ -137,7 +137,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
 //        }
 //    }
     for (int i=0;i<size;i++){
-        if (cache_system_mem_access(cache_system, address + 2**16, 'R', true) == 0){
+        if (cache_system_mem_access(cache_system, address + pow(2,16), 'R', true) == 0){
             count ++;
         }
     }
