@@ -104,7 +104,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
 {
     uint32_t *adapt = (uint32_t *) prefetcher->data;
     adapt[9] = adapt[9]+1;
-    uint32_t oneSet = pow(2,(cache_system->index_bits + cache_system->offset_bits + cache_system->tag_bits-1));
+    uint32_t oneSet = pow(2,16);
     uint32_t oneBlock = pow(2,(cache_system->line_size));
     float percentNeeded = .24;
     int count = 0;
