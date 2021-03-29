@@ -136,42 +136,42 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
             printf("Not one of these: %i",index);
         }
     }
-    if (adapt[1]/adapt[9] > percentNeeded);{
+    if (adapt[1]/adapt[9] > percentNeeded){
         if (cache_system_mem_access(cache_system, address + oneSet, 'R', true) == 0){
             count ++;
         }
     }
-    if (adapt[2]/adapt[9] > percentNeeded);{
+    if (adapt[2]/adapt[9] > percentNeeded){
         if (cache_system_mem_access(cache_system, address - oneSet, 'R', true) == 0){
             count ++;
         }
     }
-    if (adapt[3]/adapt[9] > percentNeeded);{
+    if (adapt[3]/adapt[9] > percentNeeded){
         if (cache_system_mem_access(cache_system, address + oneBlock, 'R', true) == 0){
             count ++;
         }
     }
-    if (adapt[4]/adapt[9] > percentNeeded);{
+    if (adapt[4]/adapt[9] > percentNeeded){
         if (cache_system_mem_access(cache_system, address - oneBlock, 'R', true) == 0){
             count ++;
         }
     }
-    if (adapt[5]/adapt[9] > percentNeeded);{
+    if (adapt[5]/adapt[9] > percentNeeded){
         if (cache_system_mem_access(cache_system, address + oneSet*2, 'R', true) == 0){
             count ++;
         }
     }
-    if (adapt[6]/adapt[9] > percentNeeded);{
+    if (adapt[6]/adapt[9] > percentNeeded){
         if (cache_system_mem_access(cache_system, address - oneSet*2, 'R', true) == 0){
             count ++;
         }
     }
-    if (adapt[7]/adapt[9] > percentNeeded);{
+    if (adapt[7]/adapt[9] > percentNeeded){
         if (cache_system_mem_access(cache_system, address + oneBlock*2, 'R', true) == 0){
             count ++;
         }
     }
-    if (adapt[8]/adapt[9] > percentNeeded);{
+    if (adapt[8]/adapt[9] > percentNeeded){
         if (cache_system_mem_access(cache_system, address - oneBlock*2, 'R', true) == 0){
             count ++;
         }
