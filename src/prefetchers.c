@@ -106,7 +106,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
     adapt[9] = adapt[9]+1;
     uint32_t oneSet = pow(2,16);
     uint32_t oneBlock = cache_system->line_size;
-    float percentNeeded = .10;
+    float percentNeeded = .01;
     int count = 0;
     if (adapt[0] != 0){
         int index = address - adapt[0];
