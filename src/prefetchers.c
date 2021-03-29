@@ -102,21 +102,38 @@ struct prefetcher *adjacent_prefetcher_new()
 uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_system *cache_system,
                                   uint32_t address, bool is_miss)
 {
-    int count = 0;
+    uint32_t *adapt = (uint32_t *) prefetcher->data;
     uint32_t oneSet = pow(2,(cache_system->index_bits + cache_system->offset_bits + cache_system->tag_bits-1));
     uint32_t oneBlock = pow(2,(cache_system->line_size));
-    if (cache_system_mem_access(cache_system, address + oneSet, 'R', true) == 0){
-        count ++;
+    int count = 0;
+    if (adapt[0] != 0){
+        if (address - adapt[0] = oneSet){
+            if (cache_system_mem_access(cache_system, address + oneSet, 'R', true) == 0){
+                count ++;
+            }
+        }
+        else if (address - adapt[0] = -(int) oneSet){
+            if ((address - oneSet) > 0 && cache_system_mem_access(cache_system, address - oneSet, 'R', true) == 0){
+                count ++;
+            }
+        }
+        else if (address - adapt[0] = oneBlock){
+            if (cache_system_mem_access(cache_system, address + oneBlock, 'R', true) == 0){
+                count ++;
+            }
+        }
+        else if (address - adapt[0] = -(int) oneBlock){
+            if ((address - oneBlock) > 0 && cache_system_mem_access(cache_system, address - oneBlock, 'R', true) == 0){
+                count ++;
+            }
+        }
     }
-    if ((address - oneSet) > 0 && cache_system_mem_access(cache_system, address - oneSet, 'R', true) == 0){
-        count ++;
-    }    
-    if (cache_system_mem_access(cache_system, address + oneBlock, 'R', true) == 0){
-        count ++;
-    }    
-    if ((address - oneBlock) > 0 && cache_system_mem_access(cache_system, address - oneBlock, 'R', true) == 0){
-        count ++;
-    }
+
+
+
+
+
+    adapt[0] = address;
     return count;
 }
 
@@ -135,7 +152,7 @@ struct prefetcher *custom_prefetcher_new()
 
     // TODO allocate any additional memory needed to store metadata here and
     // assign to custom_prefetcher->data.
-    custom_prefetcher->data = calloc(102, sizeof(int));
+    custom_prefetcher->data = calloc(10, sizeof(int));
     *((int *) custom_prefetcher->data) = 0;
 
 
