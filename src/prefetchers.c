@@ -116,7 +116,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
         else if (index == -(int) oneSet){
             adapt[2] = adapt[2] + 1;
         }
-        else if (index == oneBlock){
+        else if (index <= oneBlock && index > 0){
             adapt[3] = adapt[3] + 1;
         }
         else if (index == -(int) oneBlock){
@@ -128,7 +128,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
         else if (index == -(int) oneSet * 2){
             adapt[6] = adapt[6] + 1;
         }
-        else if (index == oneBlock * 2){
+        else if (index <= oneBlock * 2 && index > oneBlock){
             adapt[7] = adapt[7] + 1;
         }
         else if (index == -(int) oneBlock * 2){
