@@ -105,40 +105,78 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
     uint32_t *adapt = (uint32_t *) prefetcher->data;
     uint32_t oneSet = pow(2,(cache_system->index_bits + cache_system->offset_bits + cache_system->tag_bits-1));
     uint32_t oneBlock = pow(2,(cache_system->line_size));
+    float percentNeeded = .24;
     int count = 0;
     if (adapt[0] != 0){
         int index = address - adapt[0];
-        if (index = oneSet){
+        if (index == oneSet){
             adapt[1] = adapt[1] + 1;
         }
-        else if (index = -(int) oneSet){
+        else if (index == -(int) oneSet){
             adapt[2] = adapt[2] + 1;
         }
-        else if (index = oneBlock){
+        else if (index == oneBlock){
             adapt[3] = adapt[3] + 1;
         }
-        else if (index = -(int) oneBlock){
+        else if (index == -(int) oneBlock){
             adapt[4] = adapt[4] + 1;
         }
-        else if (index = oneSet * 2){
+        else if (index == oneSet * 2){
             adapt[5] = adapt[5] + 1;
         }
-        else if (index = -(int) oneSet * 2){
+        else if (index == -(int) oneSet * 2){
             adapt[6] = adapt[6] + 1;
         }
-        else if (index = oneBlock * 2){
+        else if (index == oneBlock * 2){
             adapt[7] = adapt[7] + 1;
         }
-        else if (index = -(int) oneBlock * 2){
+        else if (index == -(int) oneBlock * 2){
             adapt[8] = adapt[8] + 1;
         } else {
             printf("Not one of these: %i",index);
         }
     }
-
-    if (cache_system_mem_access(cache_system, address + oneSet, 'R', true) == 0){
-        count ++;
+    if (adapt[1]/adapt[9] > percentNeeded);{
+        if (cache_system_mem_access(cache_system, address + oneSet, 'R', true) == 0){
+            count ++;
+        }
     }
+    if (adapt[2]/adapt[9] > percentNeeded);{
+        if (cache_system_mem_access(cache_system, address - oneSet, 'R', true) == 0){
+            count ++;
+        }
+    }
+    if (adapt[3]/adapt[9] > percentNeeded);{
+        if (cache_system_mem_access(cache_system, address + oneBlock, 'R', true) == 0){
+            count ++;
+        }
+    }
+    if (adapt[4]/adapt[9] > percentNeeded);{
+        if (cache_system_mem_access(cache_system, address - oneBlock, 'R', true) == 0){
+            count ++;
+        }
+    }
+    if (adapt[5]/adapt[9] > percentNeeded);{
+        if (cache_system_mem_access(cache_system, address + oneSet*2, 'R', true) == 0){
+            count ++;
+        }
+    }
+    if (adapt[6]/adapt[9] > percentNeeded);{
+        if (cache_system_mem_access(cache_system, address - oneSet*2, 'R', true) == 0){
+            count ++;
+        }
+    }
+    if (adapt[7]/adapt[9] > percentNeeded);{
+        if (cache_system_mem_access(cache_system, address + oneBlock*2, 'R', true) == 0){
+            count ++;
+        }
+    }
+    if (adapt[8]/adapt[9] > percentNeeded);{
+        if (cache_system_mem_access(cache_system, address - oneBlock*2, 'R', true) == 0){
+            count ++;
+        }
+    }
+
 
 
     adapt[9] = adapt[9]+1;
